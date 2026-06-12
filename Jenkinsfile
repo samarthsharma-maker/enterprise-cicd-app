@@ -132,7 +132,8 @@ pipeline {
         stage('Production Health Check') {
             steps {
                 echo "Verifying application health on Production Server..."
-                timeout(time: 1, unit: 'MINUTES') {
+                sh 'sleep 15'
+                timeout(time: 2, unit: 'MINUTES') {
                     waitUntil {
                         script {
                             def response = sh(script: "curl -s -o /dev/null -w '%{http_code}' http://${PROD_SERVER_IP}/health", returnStdout: true).trim()
