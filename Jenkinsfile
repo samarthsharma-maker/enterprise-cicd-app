@@ -118,7 +118,7 @@ pipeline {
                             docker pull ${FULL_IMAGE}
                             
                             # Restart the service with Docker Compose (down and up)
-                            docker-compose -f /home/${PROD_USER}/docker-compose.yml up -d --remove-orphans
+                            docker compose -f /home/${PROD_USER}/docker-compose.yml up -d --remove-orphans
                             
                             # Prune old images to prevent disk space exhaustion
                             docker image prune -a -f --filter "until=24h"
