@@ -109,10 +109,8 @@ pipeline {
                 // Use the SSH agent plugin to load the private key for the Prod Server
                 sshagent(credentials: ['prod-ssh-key']) {
                     sh """
-                        // 1. Transfer the docker-compose.yml file to the target server
                         scp -o StrictHostKeyChecking=no docker-compose.yml ${PROD_USER}@${PROD_SERVER_IP}:/home/${PROD_USER}/docker-compose.yml
                         
-                        // 2. Execute SSH commands to pull the new image and restart the containers
                         ssh -o StrictHostKeyChecking=no ${PROD_USER}@${PROD_SERVER_IP} '
                             export DOCKER_IMAGE=${FULL_IMAGE}
                             
@@ -134,7 +132,6 @@ pipeline {
         stage('Production Health Check') {
             steps {
                 echo "Verifying application health on Production Server..."
-                // Poll the /health endpoint. Fails the pipeline if it doesn't return HTTP 200 within 60 seconds
                 timeout(time: 1, unit: 'MINUTES') {
                     waitUntil {
                         script {
