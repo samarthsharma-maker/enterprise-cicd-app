@@ -38,7 +38,7 @@ pipeline {
             steps {
                 echo "Installing npm packages and executing Jest tests..."
                 sh 'npm install'
-                // sh 'npm test' 
+                sh 'npm test' 
             }
         }
 
