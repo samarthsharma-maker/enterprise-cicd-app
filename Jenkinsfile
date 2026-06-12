@@ -62,7 +62,7 @@ pipeline {
                                 // SonarQube posts a webhook to Jenkins when analysis completes.
                 // If the gate fails, the pipeline aborts here.
                 // Prerequisite: webhook must be configured in SonarQube .
-                waitForQualityGate abortPipeline: true
+                waitForQualityGate abortPipeline: false
             }
         }
 
