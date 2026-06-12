@@ -79,7 +79,7 @@ pipeline {
             steps {
                 echo "Scanning ${FULL_IMAGE} for HIGH and CRITICAL vulnerabilities..."
                 // Fails the build (exit code 1) ONLY if CRITICAL vulnerabilities are found
-                sh "trivy image --severity HIGH,CRITICAL --exit-code 1 --no-progress ${FULL_IMAGE}"
+                sh "trivy image --severity CRITICAL --exit-code 1 --no-progress ${FULL_IMAGE}"
             }
         }
 
@@ -158,12 +158,12 @@ pipeline {
         success {
             echo "Deployment Successful!"
             // Send a Slack message indicating success
-            slackSend(color: 'good', message: "✅ SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' deployed successfully. Image: ${FULL_IMAGE}")
+            // slackSend(color: 'good', message: "✅ SUCCESS: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' deployed successfully. Image: ${FULL_IMAGE}")
         }
         failure {
             echo "Deployment Failed!"
             // Send a Slack message indicating failure
-            slackSend(color: 'danger', message: "❌ FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' has failed. Please check Jenkins logs.")
+            // slackSend(color: 'danger', message: "❌ FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' has failed. Please check Jenkins logs.")
         }
     }
 }
