@@ -1,19 +1,21 @@
-const request = require('supertest');
-const server = require('./server');
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-afterAll(() => server.close());
 
-describe('GET /health', () => {
-  it('returns 200 and UP status', async () => {
-    const res = await request(server).get('/health');
-    expect(res.statusCode).toBe(200);
-    expect(res.body.status).toBe('UP');
-  });
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'UP', message: 'Application is healthy', version: '1.0.0' });
 });
 
-describe('GET /', () => {
-  it('returns the success page', async () => {
-    const res = await request(server).get('/');
-    expect(res.statusCode).toBe(200);
-  });
+
+app.get('/', (req, res) => {
+  res.send('<h1>Enterprise CI/CD Pipeline Successful!</h1>');
 });
+
+
+const server = app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
+
+module.exports = server;
